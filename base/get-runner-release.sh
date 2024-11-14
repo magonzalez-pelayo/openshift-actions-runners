@@ -10,13 +10,14 @@ releases_api=https://api.github.com/repos/actions/runner/releases/latest
 
 echo "Fetching latest release from $releases_api"
 
-if [ ! $GITHUB_PAT = '' ]; then
-    # Set this to work around rate-limiting issues
-    echo "GITHUB_PAT is set; using for GitHub API"
-    auth_header="Authorization: token $GITHUB_PAT"
-fi
+#if [ ! $GITHUB_PAT = '' ]; then
+#    # Set this to work around rate-limiting issues
+#    echo "GITHUB_PAT is set; using for GitHub API"
+#    auth_header="Authorization: token $GITHUB_PAT"
+#fi
 
-curl -sSLf -H "$auth_header" -H 'Accept: application/json' -o $release_file $releases_api
+# curl -sSLf -H "$auth_header" -H 'Accept: application/json' -o $release_file $releases_api
+curl -sSLf -H 'Accept: application/json' -o $release_file $releases_api
 
 latest_tag=$(jq -r '.tag_name' $release_file)
 echo "Latest runner is ${latest_tag}"
